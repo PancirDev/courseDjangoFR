@@ -7,5 +7,5 @@ def home(request):
 
 
 def about(request):
-    abouttext = 'Text about us..'
+    abouttext = 'Text about us.. v City'
     return render(request, 'about.html', {'abouttext': abouttext})
