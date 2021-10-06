@@ -1,13 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView
 
 # from cities.forms import HtmlForm, CityForm
 from cities.forms import CityForm
 from cities.models import City
 
 __all__ = (
-    'home', 'CityDetailView', 'CityCreateView', 'CityUpdateView', 'CityDeleteView',
+    'home', 'CityDetailView', 'CityCreateView', 'CityUpdateView', 'CityDeleteView', 'CityListView',
 )
 
 
@@ -53,3 +53,15 @@ class CityDeleteView(DeleteView):
     model = City
     template_name = 'cities/delete.html'
     success_url = reverse_lazy('cities:home')
+
+
+class CityListView(ListView):
+    model = City
+    paginate_by = 10
+    template_name = 'cities/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        form = CityForm()
+        context['form'] = form
+        return context
